@@ -4,9 +4,9 @@ import (
 	"context"
 	"time"
 
-	"github.com/openidea-marketplace/internal/domain"
-	"github.com/openidea-marketplace/internal/domain/dto/request"
-	"github.com/openidea-marketplace/internal/domain/dto/response"
+	"github.com/openidea-marketplace/domain"
+	"github.com/openidea-marketplace/domain/dto/request"
+	"github.com/openidea-marketplace/domain/dto/response"
 )
 
 type userUsecase struct {

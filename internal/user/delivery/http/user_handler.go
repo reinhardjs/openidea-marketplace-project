@@ -6,8 +6,8 @@ import (
 	"github.com/labstack/echo"
 	"github.com/sirupsen/logrus"
 
-	"github.com/openidea-marketplace/internal/domain"
-	"github.com/openidea-marketplace/internal/domain/dto/request"
+	"github.com/openidea-marketplace/domain"
+	"github.com/openidea-marketplace/domain/dto/request"
 )
 
 type UserHandler struct {

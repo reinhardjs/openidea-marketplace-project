@@ -3,8 +3,8 @@ package domain
 import (
 	"context"
 
-	"github.com/openidea-marketplace/internal/domain/dto/request"
-	"github.com/openidea-marketplace/internal/domain/dto/response"
+	"github.com/openidea-marketplace/domain/dto/request"
+	"github.com/openidea-marketplace/domain/dto/response"
 )
 
 type User struct {
@@ -20,4 +20,9 @@ type UserUsecase interface {
 
 type UserRepository interface {
 	Register(ctx context.Context, request *User) (User, error)
+}
+
+type AuthUsecase interface {
+	GenerateToken(username string, password string) (string, error)
+	VerifyTOken(tokenString string) (*User, error)
 }
