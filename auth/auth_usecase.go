@@ -7,7 +7,7 @@ import (
 )
 
 type Usecase interface {
-	GenerateToken(id string, username string) (string, error)
+	GenerateToken(id string, username string, password string) (string, error)
 	VerifyToken(tokenString string) (interface{}, error)
 }
 
@@ -21,7 +21,7 @@ func NewAuthUsecase(secretKey []byte) Usecase {
 	}
 }
 
-func (a *usecase) GenerateToken(id string, username string) (string, error) {
+func (a *usecase) GenerateToken(id string, username string, password string) (string, error) {
 	claims := jwt.RegisteredClaims{
 		ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * time.Hour)),
 		IssuedAt:  jwt.NewNumericDate(time.Now()),

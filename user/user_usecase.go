@@ -48,8 +48,8 @@ func (usecase *userUsecase) Register(c context.Context, request *request.Registe
 		return
 	}
 
-	base := 10 // decimal
-	token, err := usecase.AuthUsecase.GenerateToken(strconv.FormatInt(user.ID, base), user.Username)
+	decimalBase := 10
+	token, err := usecase.AuthUsecase.GenerateToken(strconv.FormatInt(user.ID, decimalBase), user.Username, user.Password)
 	if err != nil {
 		return
 	}
