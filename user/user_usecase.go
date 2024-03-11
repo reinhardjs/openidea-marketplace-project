@@ -2,8 +2,10 @@ package user
 
 import (
 	"context"
+	"strconv"
 	"time"
 
+	"github.com/openidea-marketplace/auth"
 	"github.com/openidea-marketplace/domain"
 	"github.com/openidea-marketplace/domain/dto/request"
 	"github.com/openidea-marketplace/domain/dto/response"
@@ -20,12 +22,14 @@ type Repository interface {
 type userUsecase struct {
 	Repository     Repository
 	ContextTimeout time.Duration
+	AuthUsecase    auth.Usecase
 }
 
-func NewUsecase(repository Repository, timeout time.Duration) Usecase {
+func NewUsecase(repository Repository, timeout time.Duration, authUsecase auth.Usecase) Usecase {
 	return &userUsecase{
 		Repository:     repository,
 		ContextTimeout: timeout,
+		AuthUsecase:    authUsecase,
 	}
 }
 
@@ -40,11 +44,20 @@ func (usecase *userUsecase) Register(c context.Context, request *request.Registe
 	}
 
 	user, err = usecase.Repository.Register(ctx, &user)
+	if err != nil {
+		return
+	}
+
+	base := 10 // decimal
+	token, err := usecase.AuthUsecase.GenerateToken(strconv.FormatInt(user.ID, base), user.Username)
+	if err != nil {
+		return
+	}
 
 	res = response.RegisterUserResponse{
 		Username:    user.Username,
 		Name:        user.Name,
-		AccessToken: "abcd-efgh-1234",
+		AccessToken: token,
 	}
 
 	return
