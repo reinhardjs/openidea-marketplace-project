@@ -15,9 +15,9 @@ type User struct {
 }
 
 type UserUsecase interface {
-	Register(ctx context.Context, request *request.RegisterUserRequest) ([]response.RegisterUserResponse, error)
+	Register(ctx context.Context, request *request.RegisterUserRequest) (response.RegisterUserResponse, error)
 }
 
 type UserRepository interface {
-	Register(ctx context.Context, request User) (User, error)
+	Register(ctx context.Context, request *User) (User, error)
 }
