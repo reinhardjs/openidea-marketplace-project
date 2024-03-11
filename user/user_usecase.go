@@ -16,7 +16,7 @@ type Usecase interface {
 }
 
 type Repository interface {
-	Register(ctx context.Context, request *domain.User) (domain.User, error)
+	Register(ctx context.Context, request *domain.User) error
 }
 
 type userUsecase struct {
@@ -43,7 +43,7 @@ func (usecase *userUsecase) Register(c context.Context, request *request.Registe
 		Password: request.Password,
 	}
 
-	user, err = usecase.Repository.Register(ctx, &user)
+	err = usecase.Repository.Register(ctx, &user)
 	if err != nil {
 		return
 	}
