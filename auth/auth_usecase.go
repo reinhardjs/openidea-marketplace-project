@@ -6,22 +6,22 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-type AuthUsecase interface {
-	GenerateToken(id string, username string, password string) (string, error)
+type Usecase interface {
+	GenerateToken(id string, username string) (string, error)
 	VerifyToken(tokenString string) (interface{}, error)
 }
 
-type authService struct {
+type usecase struct {
 	secretKey []byte
 }
 
-func NewAuthService(secretKey []byte) *authService {
-	return &authService{
+func NewAuthUsecase(secretKey []byte) Usecase {
+	return &usecase{
 		secretKey: secretKey,
 	}
 }
 
-func (a *authService) GenerateToken(id string, username string) (string, error) {
+func (a *usecase) GenerateToken(id string, username string) (string, error) {
 	claims := jwt.RegisteredClaims{
 		ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * time.Hour)),
 		IssuedAt:  jwt.NewNumericDate(time.Now()),
@@ -40,7 +40,7 @@ func (a *authService) GenerateToken(id string, username string) (string, error) 
 	return signedToken, nil
 }
 
-func (a *authService) VerifyToken(tokenString string) (interface{}, error) {
+func (a *usecase) VerifyToken(tokenString string) (interface{}, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &jwt.RegisteredClaims{}, func(token *jwt.Token) (interface{}, error) {
 		return a.secretKey, nil
 	})
