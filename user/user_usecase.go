@@ -9,6 +9,7 @@ import (
 	"github.com/openidea-marketplace/domain"
 	"github.com/openidea-marketplace/domain/dto/request"
 	"github.com/openidea-marketplace/domain/dto/response"
+	"github.com/openidea-marketplace/hashing"
 )
 
 type Usecase interface {
@@ -23,13 +24,15 @@ type userUsecase struct {
 	Repository     Repository
 	ContextTimeout time.Duration
 	AuthUsecase    auth.Usecase
+	Hashing        hashing.Hashing
 }
 
-func NewUsecase(repository Repository, timeout time.Duration, authUsecase auth.Usecase) Usecase {
+func NewUsecase(repository Repository, timeout time.Duration, authUsecase auth.Usecase, hashing hashing.Hashing) Usecase {
 	return &userUsecase{
 		Repository:     repository,
 		ContextTimeout: timeout,
 		AuthUsecase:    authUsecase,
+		Hashing:        hashing,
 	}
 }
 
@@ -42,6 +45,12 @@ func (usecase *userUsecase) Register(c context.Context, request *request.Registe
 		Username: request.Username,
 		Password: request.Password,
 	}
+
+	hashSalt, err := usecase.Hashing.GenerateHash([]byte(request.Password))
+	if err != nil {
+		return
+	}
+	user.Password = string(hashSalt.Hash)
 
 	err = usecase.Repository.Register(ctx, &user)
 	if err != nil {
