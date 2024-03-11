@@ -19,5 +19,5 @@ type UserUsecase interface {
 }
 
 type UserRepository interface {
-	Register(ctx context.Context, request *request.RegisterUserRequest) error
+	Register(ctx context.Context, request User) (User, error)
 }
