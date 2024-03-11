@@ -3,8 +3,8 @@ package domain
 import (
 	"context"
 
-	"github.com/openidea-marketplace/domain/dto/request"
-	"github.com/openidea-marketplace/domain/dto/response"
+	"github.com/openidea-marketplace/internal/domain/dto/request"
+	"github.com/openidea-marketplace/internal/domain/dto/response"
 )
 
 type User struct {
