@@ -1,4 +1,4 @@
-package usecase
+package user
 
 import (
 	"context"
@@ -9,12 +9,20 @@ import (
 	"github.com/openidea-marketplace/domain/dto/response"
 )
 
+type Usecase interface {
+	Register(ctx context.Context, request *request.RegisterUserRequest) (response.RegisterUserResponse, error)
+}
+
+type Repository interface {
+	Register(ctx context.Context, request *domain.User) (domain.User, error)
+}
+
 type userUsecase struct {
-	Repository     domain.UserRepository
+	Repository     Repository
 	ContextTimeout time.Duration
 }
 
-func NewUserUsecase(repository domain.UserRepository, timeout time.Duration) domain.UserUsecase {
+func NewUsecase(repository Repository, timeout time.Duration) Usecase {
 	return &userUsecase{
 		Repository:     repository,
 		ContextTimeout: timeout,
