@@ -5,14 +5,14 @@ import (
 	"database/sql"
 
 	"github.com/openidea-marketplace/domain/entities"
-	"github.com/openidea-marketplace/user/usecases"
+	"github.com/openidea-marketplace/user"
 )
 
 type userRepository struct {
 	Conn *sql.DB
 }
 
-func NewUserRepository(conn *sql.DB) usecases.Repository {
+func NewUserRepository(conn *sql.DB) user.Repository {
 	return &userRepository{conn}
 }
 

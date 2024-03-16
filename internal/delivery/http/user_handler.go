@@ -9,19 +9,17 @@ import (
 	"github.com/openidea-marketplace/domain"
 	"github.com/openidea-marketplace/domain/dto/request"
 	"github.com/openidea-marketplace/domain/dto/response"
-	"github.com/openidea-marketplace/user/usecases"
+	"github.com/openidea-marketplace/user"
 )
 
 type UserHandler struct {
-	Usecase usecases.Usecase
+	Usecase user.Usecase
 }
 
-func NewUserUsecase(usecase usecases.Usecase) *UserHandler {
-	handler := &UserHandler{
+func NewUserHandler(usecase user.Usecase) *UserHandler {
+	return &UserHandler{
 		Usecase: usecase,
 	}
-
-	return handler
 }
 
 func (handler *UserHandler) Register(c *fiber.Ctx) error {
