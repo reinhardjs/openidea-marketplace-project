@@ -1,23 +1,26 @@
 package middleware
 
 import (
+	"fmt"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/openidea-marketplace/auth"
+	"github.com/openidea-marketplace/domain"
 	"github.com/openidea-marketplace/domain/dto/request"
 )
 
-func NewAuthMiddleware(authUsecase auth.Usecase) fiber.Handler {
+func NewAuthMiddleware(authUsecase auth.Usecase, log domain.Logger) fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
 		request := &request.VerifyUserRequest{Token: ctx.Get("Authorization", "NOT_FOUND")}
-		// authUsecase.Log.Debugf("Authorization : %s", request.Token)
+		log.Debug(fmt.Sprintf("Authorization : %s", request.Token))
 
 		issuerUsername, err := authUsecase.VerifyToken(request.Token)
 		if err != nil {
-			// authUsecase.Log.Warnf("Failed find user by token : %+v", err)
+			log.Warn(fmt.Sprintf("Failed find user by token : %+v", err))
 			return fiber.ErrUnauthorized
 		}
 
-		// authUsecase.Log.Debugf("User : %+v", issuerUsername)
+		log.Debug(fmt.Sprintf("User : %+v", issuerUsername))
 		ctx.Locals("auth", issuerUsername)
 		return ctx.Next()
 	}

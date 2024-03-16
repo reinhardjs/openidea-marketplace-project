@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/openidea-marketplace/domain"
 )
 
 type Usecase interface {
@@ -13,11 +14,13 @@ type Usecase interface {
 
 type usecase struct {
 	secretKey []byte
+	Log       domain.Logger
 }
 
-func NewAuthUsecase(secretKey []byte) Usecase {
+func NewAuthUsecase(secretKey []byte, log domain.Logger) Usecase {
 	return &usecase{
 		secretKey: secretKey,
+		Log:       log,
 	}
 }
 

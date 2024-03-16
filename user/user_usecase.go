@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/openidea-marketplace/auth"
+	"github.com/openidea-marketplace/domain"
 	"github.com/openidea-marketplace/domain/dto/request"
 	"github.com/openidea-marketplace/domain/dto/response"
 	"github.com/openidea-marketplace/domain/entities"
@@ -23,6 +24,7 @@ type Repository interface {
 type userUsecase struct {
 	Repository     Repository
 	ContextTimeout time.Duration
+	Log            domain.Logger
 	AuthUsecase    auth.Usecase
 	Hashing        hashing.Hashing
 }
