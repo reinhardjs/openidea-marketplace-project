@@ -9,7 +9,7 @@ import (
 	"github.com/openidea-marketplace/domain/dto/request"
 	"github.com/openidea-marketplace/domain/dto/response"
 	"github.com/openidea-marketplace/domain/entities"
-	"github.com/openidea-marketplace/internal/utils/hashing"
+	"github.com/openidea-marketplace/pkg/utils/hashing"
 )
 
 type Usecase interface {

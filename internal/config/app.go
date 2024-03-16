@@ -9,7 +9,7 @@ import (
 	"github.com/openidea-marketplace/internal/delivery/http"
 	"github.com/openidea-marketplace/internal/delivery/http/route"
 	"github.com/openidea-marketplace/internal/repository/mysql"
-	"github.com/openidea-marketplace/internal/utils/hashing"
+	"github.com/openidea-marketplace/pkg/utils/hashing"
 	"github.com/openidea-marketplace/user"
 	"github.com/sirupsen/logrus"
 )
