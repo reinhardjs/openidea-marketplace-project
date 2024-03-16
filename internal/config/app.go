@@ -7,6 +7,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/openidea-marketplace/auth"
 	"github.com/openidea-marketplace/internal/delivery/http"
+	"github.com/openidea-marketplace/internal/delivery/http/middleware"
 	"github.com/openidea-marketplace/internal/delivery/http/route"
 	"github.com/openidea-marketplace/internal/repository/mysql"
 	"github.com/openidea-marketplace/pkg/utils/hashing"
@@ -43,9 +44,13 @@ func Bootstrap(config *BootstrapConfig) {
 	// setup handlers
 	userHandler := http.NewUserHandler(userUseCase)
 
+	// setup middlewares
+	authMiddleware := middleware.NewAuthMiddleware(authUsecase)
+
 	routeConfig := route.RouteConfig{
-		App:         config.App,
-		UserHandler: userHandler,
+		App:            config.App,
+		UserHandler:    userHandler,
+		AuthMiddleware: authMiddleware,
 	}
 	routeConfig.Setup()
 }
