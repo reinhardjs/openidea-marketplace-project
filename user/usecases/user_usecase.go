@@ -1,11 +1,11 @@
-package user
+package usecases
 
 import (
 	"context"
 	"strconv"
 	"time"
 
-	"github.com/openidea-marketplace/auth"
+	auth "github.com/openidea-marketplace/auth/usecases"
 	"github.com/openidea-marketplace/domain/dto/request"
 	"github.com/openidea-marketplace/domain/dto/response"
 	"github.com/openidea-marketplace/domain/entities"

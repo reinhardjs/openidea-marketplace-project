@@ -9,14 +9,14 @@ import (
 	"github.com/openidea-marketplace/domain"
 	"github.com/openidea-marketplace/domain/dto/request"
 	"github.com/openidea-marketplace/domain/dto/response"
-	"github.com/openidea-marketplace/user"
+	"github.com/openidea-marketplace/user/usecases"
 )
 
 type UserHandler struct {
-	Usecase user.Usecase
+	Usecase usecases.Usecase
 }
 
-func NewUserUsecase(echo *echo.Echo, usecase user.Usecase) {
+func NewUserUsecase(echo *echo.Echo, usecase usecases.Usecase) {
 	handler := &UserHandler{
 		Usecase: usecase,
 	}
