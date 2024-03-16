@@ -8,6 +8,7 @@ import (
 
 	"github.com/openidea-marketplace/domain"
 	"github.com/openidea-marketplace/domain/dto/request"
+	"github.com/openidea-marketplace/domain/dto/response"
 	"github.com/openidea-marketplace/user"
 )
 
@@ -29,19 +30,19 @@ func (handler *UserHandler) Register(c echo.Context) error {
 
 	err := c.Bind(&registerUserRequest)
 	if err != nil {
-		return c.JSON(getStatusCode(err), domain.ResponseError{
+		return c.JSON(getStatusCode(err), response.ResponseError{
 			Message: err.Error(),
 		})
 	}
 
 	user, err := handler.Usecase.Register(ctx, &registerUserRequest)
 	if err != nil {
-		return c.JSON(getStatusCode(err), domain.ResponseError{
+		return c.JSON(getStatusCode(err), response.ResponseError{
 			Message: err.Error(),
 		})
 	}
 
-	return c.JSON(http.StatusOK, domain.ResponseSuccess{
+	return c.JSON(http.StatusOK, response.ResponseSuccess{
 		Message: "User registered successfully",
 		Data:    user,
 	})
