@@ -3,7 +3,7 @@ package http
 import (
 	"net/http"
 
-	"github.com/labstack/echo"
+	"github.com/gofiber/fiber/v2"
 	"github.com/sirupsen/logrus"
 
 	"github.com/openidea-marketplace/domain"
@@ -16,33 +16,34 @@ type UserHandler struct {
 	Usecase usecases.Usecase
 }
 
-func NewUserUsecase(echo *echo.Echo, usecase usecases.Usecase) {
+func NewUserUsecase(usecase usecases.Usecase) *UserHandler {
 	handler := &UserHandler{
 		Usecase: usecase,
 	}
-	echo.POST("/v1/user/register", handler.Register)
+
+	return handler
 }
 
-func (handler *UserHandler) Register(c echo.Context) error {
-	ctx := c.Request().Context()
+func (handler *UserHandler) Register(c *fiber.Ctx) error {
+	ctx := c.Context()
 
 	var registerUserRequest request.RegisterUserRequest
 
-	err := c.Bind(&registerUserRequest)
+	err := c.BodyParser(&registerUserRequest)
 	if err != nil {
-		return c.JSON(getStatusCode(err), response.ResponseError{
+		return c.Status(getStatusCode(err)).JSON(response.ResponseError{
 			Message: err.Error(),
 		})
 	}
 
 	user, err := handler.Usecase.Register(ctx, &registerUserRequest)
 	if err != nil {
-		return c.JSON(getStatusCode(err), response.ResponseError{
+		return c.Status(getStatusCode(err)).JSON(response.ResponseError{
 			Message: err.Error(),
 		})
 	}
 
-	return c.JSON(http.StatusOK, response.ResponseSuccess{
+	return c.Status(http.StatusOK).JSON(response.ResponseSuccess{
 		Message: "User registered successfully",
 		Data:    user,
 	})
