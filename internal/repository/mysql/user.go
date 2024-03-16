@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/openidea-marketplace/domain"
+	"github.com/openidea-marketplace/domain/entities"
 	"github.com/openidea-marketplace/user"
 )
 
@@ -16,7 +16,7 @@ func NewUserRepository(conn *sql.DB) user.Repository {
 	return &userRepository{conn}
 }
 
-func (m *userRepository) Register(ctx context.Context, user *domain.User) (err error) {
+func (m *userRepository) Register(ctx context.Context, user *entities.User) (err error) {
 	query := "INSERT user SET name=? , username=? , password=?"
 	stmt, err := m.Conn.PrepareContext(ctx, query)
 	if err != nil {

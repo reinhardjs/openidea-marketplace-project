@@ -6,9 +6,9 @@ import (
 	"time"
 
 	"github.com/openidea-marketplace/auth"
-	"github.com/openidea-marketplace/domain"
 	"github.com/openidea-marketplace/domain/dto/request"
 	"github.com/openidea-marketplace/domain/dto/response"
+	"github.com/openidea-marketplace/domain/entities"
 	"github.com/openidea-marketplace/internal/utils/hashing"
 )
 
@@ -17,7 +17,7 @@ type Usecase interface {
 }
 
 type Repository interface {
-	Register(ctx context.Context, request *domain.User) error
+	Register(ctx context.Context, request *entities.User) error
 }
 
 type userUsecase struct {
@@ -40,7 +40,7 @@ func (usecase *userUsecase) Register(c context.Context, request *request.Registe
 	ctx, cancel := context.WithTimeout(c, usecase.ContextTimeout)
 	defer cancel()
 
-	var user = domain.User{
+	var user = entities.User{
 		Name:     request.Name,
 		Username: request.Username,
 		Password: request.Password,
