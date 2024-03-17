@@ -10,4 +10,5 @@ var (
 	ErrConflict            = errors.New("username exist")
 	ErrBadParamInput       = errors.New("given param is not valid")
 	ErrWrongPassword       = errors.New("incorrect password")
+	ErrDuplicateUsername   = errors.New("user already exist")
 )

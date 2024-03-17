@@ -6,6 +6,8 @@ import (
 	"fmt"
 
 	"github.com/jackc/pgx"
+	"github.com/jackc/pgx/v5/pgconn"
+	"github.com/openidea-marketplace/domain"
 	"github.com/openidea-marketplace/domain/entities"
 	"github.com/openidea-marketplace/user"
 )
@@ -24,6 +26,16 @@ func (m *userRepository) Insert(ctx context.Context, user *entities.User) error 
 
 	var lastID int64
 	err := row.Scan(&lastID)
+
+	if err != nil {
+		pgErr, ok := err.(*pgconn.PgError)
+		if ok && pgErr.Code == "23505" { // Unique violation error code
+			// Handle the unique constraint violation error
+			return domain.ErrDuplicateUsername
+		}
+
+		return err
+	}
 
 	// PostgreSQL IDs start from 1
 	if lastID > 0 {

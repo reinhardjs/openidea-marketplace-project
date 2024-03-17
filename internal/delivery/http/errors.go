@@ -22,6 +22,8 @@ func getStatusCode(err error) int {
 		return http.StatusConflict
 	case domain.ErrWrongPassword:
 		return http.StatusBadRequest
+	case domain.ErrDuplicateUsername:
+		return http.StatusBadRequest
 	default:
 		return http.StatusInternalServerError
 	}
