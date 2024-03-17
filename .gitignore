@@ -1,3 +1,5 @@
 config.json
+*.prod.json
+*.dev.json
 
 .env
