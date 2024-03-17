@@ -15,5 +15,13 @@
         "host": "localhost",
         "port": 3306,
         "name": "openidea"
+    },
+    "jwt": {
+        "secret": "this-is-very-secret"
+    },
+    "s3": {
+        "id": "this-is-s3-id",
+        "secret": "this-is-s3-secret",
+        "bucket_name": "this-is-s3-bucketname"
     }
 }
