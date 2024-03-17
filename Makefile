@@ -1,3 +1,6 @@
+include .env
+export
+
 build:
 	GOARCH=amd64 go build -o ./bin/main ./cmd/api/main.go
 
