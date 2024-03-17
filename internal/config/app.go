@@ -10,7 +10,7 @@ import (
 	"github.com/openidea-marketplace/internal/delivery/http"
 	"github.com/openidea-marketplace/internal/delivery/http/middleware"
 	"github.com/openidea-marketplace/internal/delivery/http/route"
-	mysql "github.com/openidea-marketplace/internal/repository/psql"
+	"github.com/openidea-marketplace/internal/repository/psql"
 	"github.com/openidea-marketplace/pkg/utils/hashing"
 	"github.com/openidea-marketplace/user"
 	"github.com/spf13/viper"
@@ -33,7 +33,7 @@ func Bootstrap(config *BootstrapConfig, viper *viper.Viper) {
 	hashing := hashing.NewArgon2idHash(timeCost, saltLen, memory, threads, keyLen)
 
 	// setup repositories
-	userRepository := mysql.NewUserRepository(config.DB)
+	userRepository := psql.NewUserRepository(config.DB)
 
 	// setup usecases
 	timeout := 5 * time.Second
