@@ -10,7 +10,7 @@ import (
 	"github.com/openidea-marketplace/internal/delivery/http"
 	"github.com/openidea-marketplace/internal/delivery/http/middleware"
 	"github.com/openidea-marketplace/internal/delivery/http/route"
-	"github.com/openidea-marketplace/internal/repository/mysql"
+	mysql "github.com/openidea-marketplace/internal/repository/psql"
 	"github.com/openidea-marketplace/pkg/utils/hashing"
 	"github.com/openidea-marketplace/user"
 	"github.com/spf13/viper"
