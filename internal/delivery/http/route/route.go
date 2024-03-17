@@ -19,6 +19,7 @@ func (c *RouteConfig) Setup() {
 func (c *RouteConfig) SetupPublic() {
 	v1 := c.App.Group("/v1")
 	v1.Post("/user/register", c.UserHandler.Register)
+	v1.Post("/user/login", c.UserHandler.Login)
 }
 
 func (c *RouteConfig) SetupProtected() {
