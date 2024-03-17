@@ -16,13 +16,13 @@ func getStatusCode(err error) int {
 	switch err {
 	case domain.ErrInternalServerError:
 		return http.StatusInternalServerError
-	case domain.ErrNotFound:
+	case domain.ErrUserNotFound:
 		return http.StatusNotFound
-	case domain.ErrConflict:
+	case domain.ErrUserConflict:
 		return http.StatusConflict
-	case domain.ErrWrongPassword:
+	case domain.ErrUserWrongPassword:
 		return http.StatusBadRequest
-	case domain.ErrDuplicateUsername:
+	case domain.ErrUserDuplicateUsername:
 		return http.StatusBadRequest
 	default:
 		return http.StatusInternalServerError

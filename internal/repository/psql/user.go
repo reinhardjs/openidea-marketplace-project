@@ -31,7 +31,7 @@ func (m *userRepository) Insert(ctx context.Context, user *entities.User) error 
 		pgErr, ok := err.(*pgconn.PgError)
 		if ok && pgErr.Code == "23505" { // Unique violation error code
 			// Handle the unique constraint violation error
-			return domain.ErrDuplicateUsername
+			return domain.ErrUserDuplicateUsername
 		}
 
 		return err

@@ -92,7 +92,7 @@ func (usecase *userUsecase) Login(c context.Context, request *request.LoginUserR
 	}
 
 	if !isMatch {
-		err = domain.ErrWrongPassword
+		err = domain.ErrUserWrongPassword
 		return
 	}
 

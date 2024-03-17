@@ -6,9 +6,12 @@ import (
 
 var (
 	ErrInternalServerError = errors.New("internal server error")
-	ErrNotFound            = errors.New("user is not found")
-	ErrConflict            = errors.New("username exist")
 	ErrBadParamInput       = errors.New("given param is not valid")
-	ErrWrongPassword       = errors.New("incorrect password")
-	ErrDuplicateUsername   = errors.New("user already exist")
+)
+
+var (
+	ErrUserNotFound          = errors.New("user is not found")
+	ErrUserConflict          = errors.New("username exist")
+	ErrUserWrongPassword     = errors.New("incorrect password")
+	ErrUserDuplicateUsername = errors.New("user already exist")
 )
