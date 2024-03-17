@@ -16,7 +16,7 @@ func main() {
 		DB:  db,
 		App: app,
 		Log: log,
-	})
+	}, viperConfig)
 
 	webPort := viperConfig.GetInt("web.port")
 	err := app.Listen(fmt.Sprintf(":%d", webPort))
