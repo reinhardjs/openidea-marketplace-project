@@ -4,9 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/sirupsen/logrus"
 
-	"github.com/openidea-marketplace/domain"
 	"github.com/openidea-marketplace/domain/dto/request"
 	"github.com/openidea-marketplace/domain/dto/response"
 	"github.com/openidea-marketplace/user"
@@ -47,20 +45,27 @@ func (handler *UserHandler) Register(c *fiber.Ctx) error {
 	})
 }
 
-func getStatusCode(err error) int {
-	if err == nil {
-		return http.StatusOK
+func (handler *UserHandler) Login(c *fiber.Ctx) error {
+	ctx := c.Context()
+
+	var loginUserRequest request.LoginUserRequest
+
+	err := c.BodyParser(&loginUserRequest)
+	if err != nil {
+		return c.Status(getStatusCode(err)).JSON(response.ResponseError{
+			Message: err.Error(),
+		})
 	}
 
-	logrus.Error(err)
-	switch err {
-	case domain.ErrInternalServerError:
-		return http.StatusInternalServerError
-	case domain.ErrNotFound:
-		return http.StatusNotFound
-	case domain.ErrConflict:
-		return http.StatusConflict
-	default:
-		return http.StatusInternalServerError
+	user, err := handler.Usecase.Login(ctx, &loginUserRequest)
+	if err != nil {
+		return c.Status(getStatusCode(err)).JSON(response.ResponseError{
+			Message: err.Error(),
+		})
 	}
+
+	return c.Status(http.StatusOK).JSON(response.ResponseSuccess{
+		Message: "User login successfully",
+		Data:    user,
+	})
 }
