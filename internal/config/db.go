@@ -6,7 +6,7 @@ import (
 	"log"
 	"net/url"
 
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/jackc/pgx/v5/stdlib"
 
 	"github.com/spf13/viper"
 )
@@ -19,14 +19,18 @@ func NewDatabase(viper *viper.Viper) *sql.DB {
 	dbPass := viper.GetString("database.password")
 	dbName := viper.GetString("database.name")
 	connection := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbUser, dbPass, dbHost, dbPort, dbName)
+
 	val := url.Values{}
 	val.Add("parseTime", "1")
 	val.Add("loc", "Asia/Jakarta")
+
 	dsn := fmt.Sprintf("%s?%s", connection, val.Encode())
-	dbConn, err := sql.Open(`mysql`, dsn)
+	dbConn, err := sql.Open(`pgx`, dsn)
+
 	if err != nil {
 		log.Fatal("failed to open connection to database", err)
 	}
+
 	err = dbConn.Ping()
 	if err != nil {
 		log.Fatal("failed to ping database ", err)
