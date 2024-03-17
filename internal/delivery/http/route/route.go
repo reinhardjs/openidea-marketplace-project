@@ -12,12 +12,17 @@ type RouteConfig struct {
 }
 
 func (c *RouteConfig) Setup() {
-	c.SetupAuthRoute()
+	c.SetupPublic()
+	c.SetupProtected()
 }
 
-func (c *RouteConfig) SetupAuthRoute() {
-	c.App.Use(c.AuthMiddleware)
-
+func (c *RouteConfig) SetupPublic() {
 	v1 := c.App.Group("/v1")
 	v1.Post("/user/register", c.UserHandler.Register)
+}
+
+func (c *RouteConfig) SetupProtected() {
+	c.App.Use(c.AuthMiddleware)
+
+	// v1 := c.App.Group("/v1")
 }
